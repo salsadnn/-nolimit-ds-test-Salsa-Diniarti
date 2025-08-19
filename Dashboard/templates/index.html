@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+
+    <!-- Bootstrap -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container contact-form">
+        <div class="contact-image">
+            <img src="{{ url_for('static', filename='gambar.png') }}" alt="Sentiment"/>
+        </div>
+        <form method="post">
+            <h3>Sentiment Analysis</h3>
+            <div class="row">
+                <!-- Form input ulasan -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" name="txtName" class="form-control" placeholder="Masukan Ulasan" value="{{ request.form['txtName'] if request.form.get('txtName') }}" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="btnSubmit" class="btnContact btn btn-primary" value="Submit Ulasan" />
+                    </div>
+                </div>
+
+                <!-- Hasil prediksi -->
+                <div class="col-md-6">
+                    <div class="form-group result-card">
+                        <h4>Hasil Ulasan</h4>
+
+                        {% if prediction %}
+                            <p><strong>Prediksi Sentimen:</strong> 
+                                <span class="badge-sentiment {{ prediction }}">{{ prediction }}</span>
+                            </p>
+
+                            <h5>Probabilitas Kelas:</h5>
+                            <ul>
+                                {% for label, prob in probs.items() %}
+                                    <li class="{{ label }}">
+                                        {{ label }} : {{ "%.2f"|format(prob * 100) }}%
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>Belum ada hasil. Silakan masukkan ulasan.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Script -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+</body>
+</html>

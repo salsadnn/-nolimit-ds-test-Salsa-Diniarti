@@ -1,0 +1,10 @@
+{
+  "csv_path": "/content/hasil_scraping_TIKTOK.csv",
+  "text_col": "content",
+  "score_col": "score",
+  "label_names": [
+    "Negatif",
+    "Netral",
+    "Positif"
+  ]
+}
